@@ -1,13 +1,13 @@
 ---
 title: Use Azure CLI to assign an Azure role for data access 
 titleSuffix: Azure Storage
-description: Learn how to use Azure CLI to assign permissions to an Azure Active Directory security principal with role-based access control (RBAC). Azure Storage supports built-in and Azure custom roles for authentication via Azure AD.
+description: Learn how to use Azure CLI to assign permissions to an Azure Active Directory security principal with Azure role-based access control (Azure RBAC). Azure Storage supports built-in and Azure custom roles for authentication via Azure AD.
 services: storage
 author: tamram
 
 ms.service: storage
 ms.topic: how-to
-ms.date: 07/16/2020
+ms.date: 02/10/2021
 ms.author: tamram
 ms.reviewer: ozgun
 ms.subservice: common 
@@ -32,7 +32,7 @@ This article describes how to use Azure CLI to list Azure built-in roles and ass
 
 ## List available Azure roles
 
-To list available Azure built-in roles with Azure CLI, use the [az role definition list](/cli/azure/role/definition#az-role-definition-list) command:
+To list available Azure built-in roles with Azure CLI, use the [az role definition list](/cli/azure/role/definition#az_role_definition_list) command:
 
 ```azurecli-interactive
 az role definition list --out table
@@ -52,7 +52,12 @@ Storage Queue Data Reader                 Allows for read access to Azure Storag
 
 ## Assign an Azure role to a security principal
 
-To assign an Azure role to a security principal, use the [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) command. The format of the command can differ based on the scope of the assignment. The following examples show how to assign a role to a user at various scopes, but you can use the same command to assign a role to any security principal.
+To assign an Azure role to a security principal, use the [az role assignment create](/cli/azure/role/assignment#az_role_assignment_create) command. The format of the command can differ based on the scope of the assignment. The following examples show how to assign a role to a user at various scopes, but you can use the same command to assign a role to any security principal.
+
+> [!IMPORTANT]
+> When you create an Azure Storage account, you are not automatically assigned permissions to access data via Azure AD. You must explicitly assign yourself an Azure RBAC role for data access. You can assign it at the level of your subscription, resource group, storage account, or container or queue.
+>
+> If the storage account is locked with an Azure Resource Manager read-only lock, then the lock prevents the assignment of Azure RBAC roles that are scoped to the storage account or to a data container (blob container or queue).
 
 ### Container scope
 
@@ -135,6 +140,6 @@ az role assignment create \
 
 ## Next steps
 
-- [Manage access to Azure resources using RBAC and Azure PowerShell](../../role-based-access-control/role-assignments-powershell.md)
-- [Grant access to Azure blob and queue data with RBAC using Azure PowerShell](storage-auth-aad-rbac-powershell.md)
-- [Grant access to Azure blob and queue data with RBAC in the Azure portal](storage-auth-aad-rbac-portal.md)
+- [Add or remove Azure role assignments using the Azure PowerShell module](../../role-based-access-control/role-assignments-powershell.md)
+- [Use the Azure PowerShell module to assign an Azure role for access to blob and queue data](storage-auth-aad-rbac-powershell.md)
+- [Use the Azure portal to assign an Azure role for access to blob and queue data](storage-auth-aad-rbac-portal.md)
